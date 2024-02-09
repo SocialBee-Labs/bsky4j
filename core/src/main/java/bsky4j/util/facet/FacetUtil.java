@@ -18,7 +18,8 @@ public class FacetUtil {
         String str = text;
 
         // メンションの要素を分解
-        Pattern mention = Pattern.compile("(?<=^|\\s)(@[\\w.]+)");
+        // Pattern mention = Pattern.compile("(?<=^|\\s)(@[\\w.]+)");
+        Pattern mention = Pattern.compile("(?<=^|\\s)(@[\\w.-]+)");
         // リンクの要素を展開
         Pattern link = Pattern.compile("(?<=^|\\s)(https?://\\S+)");
 
@@ -95,6 +96,6 @@ public class FacetUtil {
             display = display.substring(0, 27) + "...";
         }
 
-        return new FacetRecord(FacetType.Link, link, display);
+        return new FacetRecord(FacetType.Link, link, link);
     }
 }

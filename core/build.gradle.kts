@@ -4,8 +4,8 @@ plugins {
     `maven-publish`
 }
 
-group = "bsky4j-core"
-version = "1.0-SNAPSHOT"
+group = "com.socialbee.bsky4j"
+version = "1.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
