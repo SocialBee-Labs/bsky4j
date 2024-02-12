@@ -11,6 +11,7 @@ import bsky4j.internal.bsky._FeedResource;
 import bsky4j.internal.bsky._GraphResource;
 import bsky4j.internal.bsky._NotificationResource;
 import bsky4j.internal.bsky._UndocumentedResource;
+import net.socialhub.logger.Logger;
 
 public class _Bluesky extends _ATProtocol implements Bluesky {
 
@@ -26,6 +27,8 @@ public class _Bluesky extends _ATProtocol implements Bluesky {
 
     public _Bluesky(String uri) {
         super(uri);
+
+        Logger.getLogger(null).setLogLevel(Logger.LogLevel.WARN);
 
         this.actor = new _ActorResource(uri);
         this.feed = new _FeedResource(uri);

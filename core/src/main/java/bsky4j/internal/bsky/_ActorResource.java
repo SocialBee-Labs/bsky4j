@@ -2,14 +2,7 @@ package bsky4j.internal.bsky;
 
 import bsky4j.BlueskyTypes;
 import bsky4j.api.bsky.ActorResource;
-import bsky4j.api.entity.bsky.actor.ActorGetPreferencesRequest;
-import bsky4j.api.entity.bsky.actor.ActorGetPreferencesResponse;
-import bsky4j.api.entity.bsky.actor.ActorGetProfileRequest;
-import bsky4j.api.entity.bsky.actor.ActorGetProfileResponse;
-import bsky4j.api.entity.bsky.actor.ActorGetProfilesRequest;
-import bsky4j.api.entity.bsky.actor.ActorGetProfilesResponse;
-import bsky4j.api.entity.bsky.actor.ActorSearchActorsRequest;
-import bsky4j.api.entity.bsky.actor.ActorSearchActorsResponse;
+import bsky4j.api.entity.bsky.actor.*;
 import bsky4j.api.entity.share.Response;
 import net.socialhub.http.HttpMediaType;
 import net.socialhub.http.HttpRequestBuilder;
@@ -35,6 +28,22 @@ public class _ActorResource implements ActorResource {
                     new HttpRequestBuilder()
                             .target(xrpc(this.uri))
                             .path(BlueskyTypes.ActorSearchActors)
+                            .header("Authorization", request.getBearerToken())
+                            .request(HttpMediaType.APPLICATION_JSON);
+
+            request.toMap().forEach(builder::param);
+            return builder.get();
+        });
+    }
+
+    @Override
+    public Response<ActorSearchActorsTypeaheadResponse> searchActorsTypeahead(ActorSearchActorsTypeaheadRequest request) {
+        return proceed(ActorSearchActorsTypeaheadResponse.class, () -> {
+
+            HttpRequestBuilder builder =
+                    new HttpRequestBuilder()
+                            .target(xrpc(this.uri))
+                            .path(BlueskyTypes.ActorSearchActorsTypeahead)
                             .header("Authorization", request.getBearerToken())
                             .request(HttpMediaType.APPLICATION_JSON);
 
