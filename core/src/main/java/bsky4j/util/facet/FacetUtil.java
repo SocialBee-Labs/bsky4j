@@ -96,6 +96,6 @@ public class FacetUtil {
             display = display.substring(0, 27) + "...";
         }
 
-        return new FacetRecord(FacetType.Link, link, link);
+        return new FacetRecord(FacetType.Link, link, display);
     }
 }
