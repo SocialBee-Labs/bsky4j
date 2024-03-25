@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.socialbee.bsky4j"
-version = "1.0.2"
+version = "1.0.3-SNAPSHOT"
 
 repositories {
     mavenCentral()
