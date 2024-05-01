@@ -4,6 +4,7 @@ import bsky4j.model.bsky.richtext.RichtextFacet;
 import bsky4j.model.bsky.richtext.RichtextFacetByteSlice;
 import bsky4j.model.bsky.richtext.RichtextFacetLink;
 import bsky4j.model.bsky.richtext.RichtextFacetMention;
+import bsky4j.model.bsky.richtext.RichtextFacetTag;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -85,6 +86,25 @@ public class FacetList {
                     RichtextFacetLink mention = new RichtextFacetLink();
                     mention.setUri(record.getContentText());
                     facet.getFeatures().add(mention);
+
+                    facets.add(facet);
+                    break;
+                }
+
+                case Tag: {
+                    RichtextFacetByteSlice slice = new RichtextFacetByteSlice();
+
+                    slice.setByteStart(bytes);
+                    bytes += byteCount.apply(record.getDisplayText());
+                    slice.setByteEnd(bytes);
+
+                    RichtextFacet facet = new RichtextFacet();
+                    facet.setFeatures(new ArrayList<>());
+                    facet.setIndex(slice);
+
+                    RichtextFacetTag tag = new RichtextFacetTag();
+                    tag.setTag(record.getContentText());
+                    facet.getFeatures().add(tag);
 
                     facets.add(facet);
                     break;

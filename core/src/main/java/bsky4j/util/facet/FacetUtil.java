@@ -22,16 +22,20 @@ public class FacetUtil {
         Pattern mention = Pattern.compile("(?<=^|\\s)(@[\\w.-]+)");
         // リンクの要素を展開
         Pattern link = Pattern.compile("(?<=^|\\s)(https?://\\S+)");
+        // tag pattern
+        Pattern tag = Pattern.compile("(?<=^|\\s)(#[\\w.-]+)");
 
         while (true) {
             Matcher mentionMatcher = mention.matcher(str);
             Matcher linkMatcher = link.matcher(str);
+            Matcher tagMatcher = tag.matcher(str);
 
             boolean mentionFind = mentionMatcher.find();
             boolean linkFind = linkMatcher.find();
+            boolean tagFind = tagMatcher.find();
 
             // どちらも発見できなかった場合は終了
-            if (!mentionFind && !linkFind) {
+            if (!mentionFind && !linkFind && !tagFind) {
                 records.add(new FacetRecord(FacetType.Text, str, str));
                 break;
             }
@@ -56,6 +60,12 @@ public class FacetUtil {
                 }
             }
 
+            if (tagFind) {
+                start = tagMatcher.start();
+                end = tagMatcher.end();
+                type = FacetType.Tag;
+            }
+
             // 前後の文字列を切り出す
             String before = str.substring(0, start);
             str = str.substring(end);
@@ -72,6 +82,8 @@ public class FacetUtil {
                 case Link:
                     records.add(linkFacet(linkMatcher.group()));
                     break;
+                case Tag:
+                    records.add(tagFacet(tagMatcher.group()));
             }
 
             if (str.isEmpty()) {
@@ -97,5 +109,9 @@ public class FacetUtil {
         }
 
         return new FacetRecord(FacetType.Link, link, display);
+    }
+
+    static FacetRecord tagFacet(String tag) {
+        return new FacetRecord(FacetType.Tag, tag, tag);
     }
 }

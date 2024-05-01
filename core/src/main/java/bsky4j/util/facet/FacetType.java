@@ -4,4 +4,5 @@ public enum FacetType {
     Text,
     Mention,
     Link,
+    Tag
 }
